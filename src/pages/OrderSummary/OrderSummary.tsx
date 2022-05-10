@@ -1,32 +1,59 @@
 import React, { useState } from "react";
+import axios from "axios";
+import { useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 import Checkbox from "react-bootstrap/FormCheck";
+import { SundaeOptions } from "../SundaeOptions";
+import { ToppinOptions } from "../ToppingOptions";
+import { AlertMessage } from "../common/AlertMessage";
 
-const OrderSummary = () => {
-  const [checked, setChecked] = useState(false);
+interface Scoops {
+  name: string;
+  imagePath: string;
+}
+interface Props {
+  typeOfOrder: "toppings" | "scoops";
+}
 
-  const checkboxLabel = (
-    <span>
-      I agree to <span style={{ color: "blue" }}>Terms and Conditions</span>
-    </span>
-  );
-  return (
-    <Form>
-      <Form.Group controlId="terms-and-condition">
-        <Checkbox
-          checked={checked}
-          onChange={(c) => setChecked(c.target.checked)}
-          id="chkAgree"
-          label={checkboxLabel}
-        ></Checkbox>
-      </Form.Group>
-      <Button variant="primary" disabled={!checked} type="submit">
-        Confirm order
-      </Button>
-    </Form>
-  );
+export const OrderSummary = ({ typeOfOrder }: Props) => {
+  const [scoppings, setScoppings] = useState<Scoops[]>([]);
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3030/${typeOfOrder}`)
+      .then((response) => {
+        setScoppings(response.data);
+      })
+      .catch((error) => {
+        setHasError(true);
+      });
+  }, [typeOfOrder]);
+
+  if (hasError) {
+    return <AlertMessage />;
+  }
+
+  const scoops = scoppings.map((scoop) => {
+    if (typeOfOrder === "scoops") {
+      return (
+        <SundaeOptions
+          key={scoop.name}
+          name={scoop.name}
+          imagePath={scoop.imagePath}
+        />
+      );
+    }
+    return (
+      <ToppinOptions
+        key={scoop.name}
+        name={scoop.name}
+        imagePath={scoop.imagePath}
+      />
+    );
+  });
+
+  return <>{scoops}</>;
 };
-
-export { OrderSummary };
