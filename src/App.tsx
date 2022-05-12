@@ -1,14 +1,13 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import { Summary } from "./pages/Summary";
+import { OrderSummaryProvider } from "./pages/OrderSummary/useOrderSummary";
+import { OrderEntry } from "./pages/OrderEntry";
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <Summary />
-    </div>
+    <OrderSummaryProvider>
+      <OrderEntry />
+    </OrderSummaryProvider>
   );
-}
+};
 
 export default App;

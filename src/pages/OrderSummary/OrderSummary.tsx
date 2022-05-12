@@ -8,19 +8,23 @@ import Checkbox from "react-bootstrap/FormCheck";
 import { SundaeOptions } from "../SundaeOptions";
 import { ToppinOptions } from "../ToppingOptions";
 import { AlertMessage } from "../common/AlertMessage";
-
+import { TypeOfOrder } from "../common/types";
+import { useOrderSummary } from "./useOrderSummary";
+import { Col, Row } from "react-bootstrap";
+import { formatCurrency } from "../utils/formatCurrenct";
 interface Scoops {
   name: string;
   imagePath: string;
 }
 interface Props {
-  typeOfOrder: "toppings" | "scoops";
+  typeOfOrder: TypeOfOrder;
 }
 
 export const OrderSummary = ({ typeOfOrder }: Props) => {
   const [scoppings, setScoppings] = useState<Scoops[]>([]);
   const [hasError, setHasError] = useState(false);
 
+  const { options, updateOptionsItem } = useOrderSummary();
   useEffect(() => {
     axios
       .get(`http://localhost:3030/${typeOfOrder}`)
@@ -43,6 +47,9 @@ export const OrderSummary = ({ typeOfOrder }: Props) => {
           key={scoop.name}
           name={scoop.name}
           imagePath={scoop.imagePath}
+          updateItem={(name, value) =>
+            updateOptionsItem(name, value, typeOfOrder)
+          }
         />
       );
     }
@@ -51,9 +58,21 @@ export const OrderSummary = ({ typeOfOrder }: Props) => {
         key={scoop.name}
         name={scoop.name}
         imagePath={scoop.imagePath}
+        updateItem={(name, value) =>
+          updateOptionsItem(name, value, typeOfOrder)
+        }
       />
     );
   });
 
-  return <>{scoops}</>;
+  return (
+    <>
+      {scoops}
+
+      {options && console.log("OPTIONS HAS VALUE")}
+      <Row>
+        <Col sm={4}>Scoops total {formatCurrency(0)}</Col>
+      </Row>
+    </>
+  );
 };
