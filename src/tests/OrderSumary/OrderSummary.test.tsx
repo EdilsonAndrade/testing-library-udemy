@@ -1,4 +1,4 @@
-import { screen, render } from "@testing-library/react";
+import { screen, render } from "../../../src/pages/utils/react-test-util";
 import { OrderSummary } from "../../pages/OrderSummary";
 
 describe("Order Summary", () => {

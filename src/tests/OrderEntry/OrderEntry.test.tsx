@@ -1,4 +1,8 @@
-import { screen, render, waitFor } from "@testing-library/react";
+import {
+  screen,
+  render,
+  waitFor,
+} from "../../../src/pages/utils/react-test-util";
 import { rest } from "msw";
 import { OrderEntry } from "../../pages/OrderEntry";
 import { server } from "../OrderSumary/mocks/server";
@@ -15,9 +19,7 @@ it("should show two alerts when calling scoops and toppings", async () => {
 
   render(<OrderEntry />);
   await waitFor(async () => {
-    const alert = await screen.findAllByRole("alert", {
-      name: "An error has occurred",
-    });
+    const alert = await screen.findAllByRole("alert");
 
     expect(alert).toHaveLength(2);
   });
