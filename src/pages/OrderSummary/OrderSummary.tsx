@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useEffect } from "react";
+
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
@@ -12,6 +12,7 @@ import { TypeOfOrder } from "../common/types";
 import { useOrderSummary } from "./useOrderSummary";
 import { Col, Row } from "react-bootstrap";
 import { formatCurrency } from "../utils/formatCurrenct";
+import { OuterExpressionKinds } from "typescript";
 interface Scoops {
   name: string;
   imagePath: string;
@@ -24,7 +25,8 @@ export const OrderSummary = ({ typeOfOrder }: Props) => {
   const [scoppings, setScoppings] = useState<Scoops[]>([]);
   const [hasError, setHasError] = useState(false);
 
-  const { options, updateOptionsItem } = useOrderSummary();
+  const { options, updateOptionsItem, totals } = useOrderSummary();
+
   useEffect(() => {
     axios
       .get(`http://localhost:3030/${typeOfOrder}`)
@@ -69,9 +71,8 @@ export const OrderSummary = ({ typeOfOrder }: Props) => {
     <>
       {scoops}
 
-      {options && console.log("OPTIONS HAS VALUE")}
       <Row>
-        <Col sm={4}>Scoops total {formatCurrency(0)}</Col>
+        <Col sm={4}>Scoops total {formatCurrency(totals.subTotalScoops)}</Col>
       </Row>
     </>
   );
