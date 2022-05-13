@@ -1,4 +1,5 @@
 import { useEffect, useContext } from "react";
+import { useCallback } from "react";
 import { createContext, useState } from "react";
 import { scoopsPrice, toppingPrice } from "../../constants";
 import { TypeOfOrder } from "../common/types";
@@ -36,16 +37,15 @@ const OrderSummaryProvider = ({ children }: { children: React.ReactNode }) => {
     total: 0,
   });
 
-  const updateOptionsItem = (
-    name: string,
-    value: string,
-    typeOfOrder: TypeOfOrder
-  ) => {
-    const createdOptions = { ...options };
-    const optionsMap = options[typeOfOrder];
-    optionsMap.set(name, parseInt(value));
-    setOptions(createdOptions);
-  };
+  const updateOptionsItem = useCallback(
+    (name: string, value: string, typeOfOrder: TypeOfOrder) => {
+      const createdOptions = { ...options };
+      const optionsMap = options[typeOfOrder];
+      optionsMap.set(name, parseInt(value));
+      setOptions(createdOptions);
+    },
+    [options]
+  );
 
   useEffect(() => {
     let subTotalScoops = 0;
@@ -59,7 +59,7 @@ const OrderSummaryProvider = ({ children }: { children: React.ReactNode }) => {
       subTotalToppings += value * toppingPrice;
     });
 
-    total = subTotalToppings + subTotalToppings;
+    total = subTotalScoops + subTotalToppings;
 
     setTotals({
       subTotalScoops,

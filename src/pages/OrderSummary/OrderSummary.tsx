@@ -13,7 +13,7 @@ import { useOrderSummary } from "./useOrderSummary";
 import { Col, Row } from "react-bootstrap";
 import { formatCurrency } from "../utils/formatCurrenct";
 import { OuterExpressionKinds } from "typescript";
-interface Scoops {
+interface SundaeOption {
   name: string;
   imagePath: string;
 }
@@ -22,7 +22,7 @@ interface Props {
 }
 
 export const OrderSummary = ({ typeOfOrder }: Props) => {
-  const [scoppings, setScoppings] = useState<Scoops[]>([]);
+  const [sundaesOption, setSundaesOption] = useState<SundaeOption[]>([]);
   const [hasError, setHasError] = useState(false);
 
   const { options, updateOptionsItem, totals } = useOrderSummary();
@@ -31,7 +31,7 @@ export const OrderSummary = ({ typeOfOrder }: Props) => {
     axios
       .get(`http://localhost:3030/${typeOfOrder}`)
       .then((response) => {
-        setScoppings(response.data);
+        setSundaesOption(response.data);
       })
       .catch((error) => {
         setHasError(true);
@@ -42,13 +42,13 @@ export const OrderSummary = ({ typeOfOrder }: Props) => {
     return <AlertMessage />;
   }
 
-  const scoops = scoppings.map((scoop) => {
+  const optionsOfSundae = sundaesOption.map((sundayOption) => {
     if (typeOfOrder === "scoops") {
       return (
         <SundaeOptions
-          key={scoop.name}
-          name={scoop.name}
-          imagePath={scoop.imagePath}
+          key={sundayOption.name}
+          name={sundayOption.name}
+          imagePath={sundayOption.imagePath}
           updateItem={(name, value) =>
             updateOptionsItem(name, value, typeOfOrder)
           }
@@ -57,9 +57,9 @@ export const OrderSummary = ({ typeOfOrder }: Props) => {
     }
     return (
       <ToppinOptions
-        key={scoop.name}
-        name={scoop.name}
-        imagePath={scoop.imagePath}
+        key={sundayOption.name}
+        name={sundayOption.name}
+        imagePath={sundayOption.imagePath}
         updateItem={(name, value) =>
           updateOptionsItem(name, value, typeOfOrder)
         }
@@ -69,10 +69,18 @@ export const OrderSummary = ({ typeOfOrder }: Props) => {
 
   return (
     <>
-      {scoops}
+      {optionsOfSundae}
 
       <Row>
         <Col sm={4}>Scoops total {formatCurrency(totals.subTotalScoops)}</Col>
+      </Row>
+      <Row>
+        <Col sm={4}>
+          Toppings total {formatCurrency(totals.subTotalToppings)}
+        </Col>
+      </Row>
+      <Row>
+        <Col sm={4}>Grand Total: {formatCurrency(totals.total)}</Col>
       </Row>
     </>
   );
