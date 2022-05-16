@@ -15,6 +15,7 @@ interface Total {
 }
 interface OrderSummaryData {
   totals: Total;
+  resetOrder(): void;
   updateOptionsItem(
     name: string,
     value: string,
@@ -35,6 +36,13 @@ const OrderOptionsProvider = ({ children }: { children: React.ReactNode }) => {
     subTotalToppings: 0,
     total: 0,
   });
+
+  const resetOrder = useCallback(() => {
+    setOptions({
+      scoops: new Map<string, number>(),
+      toppings: new Map<string, number>(),
+    });
+  }, []);
 
   const updateOptionsItem = useCallback(
     (name: string, value: string, typeOfOrder: TypeOfOrder) => {
@@ -71,6 +79,7 @@ const OrderOptionsProvider = ({ children }: { children: React.ReactNode }) => {
       value={{
         updateOptionsItem,
         totals,
+        resetOrder,
       }}
     >
       {children}
@@ -87,4 +96,4 @@ function useOrderOptions(): OrderSummaryData {
   return context;
 }
 
-export { OrderOptionsProvider, useOrderOptions as useOrderSummary };
+export { OrderOptionsProvider, useOrderOptions };

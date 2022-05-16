@@ -4,7 +4,7 @@ import { SundaeOptions } from "../SundaeOptions";
 import { ToppinOptions } from "../ToppingOptions";
 import { AlertMessage } from "../common/AlertMessage";
 import { TypeOfOrder } from "../common/types";
-import { useOrderSummary } from "./useOrderOptions";
+import { useOrderOptions } from "./useOrderOptions";
 import { Col, Row } from "react-bootstrap";
 import { formatCurrency } from "../utils/formatCurrenct";
 interface SundaeOption {
@@ -19,7 +19,7 @@ export const OrderOptions = ({ typeOfOrder }: Props) => {
   const [sundaesOption, setSundaesOption] = useState<SundaeOption[]>([]);
   const [hasError, setHasError] = useState(false);
 
-  const { updateOptionsItem, totals } = useOrderSummary();
+  const { updateOptionsItem, totals } = useOrderOptions();
 
   useEffect(() => {
     axios

@@ -4,8 +4,10 @@ import Form from "react-bootstrap/Form";
 import { Popover, OverlayTrigger } from "react-bootstrap";
 
 import Checkbox from "react-bootstrap/FormCheck";
-
-const Summary = () => {
+interface Props {
+  changePage(page: string): void;
+}
+const Summary = ({ changePage }: Props) => {
   const [checked, setChecked] = useState(false);
 
   const popOver = () => (
@@ -23,6 +25,7 @@ const Summary = () => {
   );
   return (
     <Form>
+      Order Summary
       <Form.Group controlId="terms-and-condition">
         <Checkbox
           checked={checked}
@@ -31,7 +34,15 @@ const Summary = () => {
           label={checkboxLabel}
         ></Checkbox>
       </Form.Group>
-      <Button variant="primary" disabled={!checked} type="submit">
+      <Button
+        variant="primary"
+        role="button"
+        onClick={() => {
+          changePage("Completed");
+        }}
+        disabled={!checked}
+        type="button"
+      >
         Confirm order
       </Button>
     </Form>

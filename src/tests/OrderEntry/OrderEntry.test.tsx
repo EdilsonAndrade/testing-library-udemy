@@ -17,7 +17,7 @@ it("should show two alerts when calling scoops and toppings", async () => {
     )
   );
 
-  render(<OrderEntry />);
+  render(<OrderEntry changePage={() => {}} />);
   await waitFor(async () => {
     const alert = await screen.findAllByRole("alert");
 

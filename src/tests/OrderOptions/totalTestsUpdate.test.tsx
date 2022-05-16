@@ -2,6 +2,7 @@ import { render, screen } from "../../pages/utils/react-test-util";
 import userEvent from "@testing-library/user-event";
 import { OrderOptions } from "../../pages/OrderOptions";
 import { OrderEntry } from "../../pages/OrderEntry";
+import { getHeapStatistics } from "v8";
 
 it("should show the subtotal value when I add a scoop", async () => {
   render(<OrderOptions typeOfOrder="scoops" />);
@@ -67,7 +68,7 @@ it("should have total = to 7.5", async () => {
   const user = userEvent.setup();
   render(
     <>
-      <OrderEntry />
+      <OrderEntry changePage={jest.fn()} />
     </>
   );
 

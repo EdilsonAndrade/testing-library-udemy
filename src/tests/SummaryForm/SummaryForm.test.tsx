@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event";
 
 describe("Form flow test", () => {
   it("button should be disable and checkbox unchecked", () => {
-    render(<Summary />);
+    render(<Summary changePage={jest.fn()} />);
     const checkbox = screen.getByRole("checkbox", {
       name: /i agree to terms and conditions/i,
     });
@@ -15,7 +15,7 @@ describe("Form flow test", () => {
     expect(button).toBeDisabled();
   });
   it("should enable button when checkbox is checked", async () => {
-    render(<Summary />);
+    render(<Summary changePage={jest.fn()} />);
     const checkbox = screen.getByRole("checkbox", {
       name: /i agree to terms and conditions/i,
     });
@@ -28,7 +28,7 @@ describe("Form flow test", () => {
   });
 
   it("should enable button when checkbox is checked and disable when checkobx is unchecked", async () => {
-    render(<Summary />);
+    render(<Summary changePage={jest.fn()} />);
     const checkbox = screen.getByRole("checkbox", {
       name: /i agree to terms and conditions/i,
     });
@@ -41,7 +41,7 @@ describe("Form flow test", () => {
   });
   it("popup should not exist on form until user hover terms and condition and disappear when popup is unhover", async () => {
     const user = userEvent.setup();
-    render(<Summary />);
+    render(<Summary changePage={jest.fn()} />);
 
     const nullPopover = screen.queryByText(
       /no ice crem will actually be delivered/i
