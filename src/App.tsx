@@ -1,12 +1,12 @@
 import React from "react";
-import { OrderSummaryProvider } from "./pages/OrderSummary/useOrderSummary";
+import { OrderOptionsProvider } from "./pages/OrderOptions/useOrderOptions";
 import { OrderEntry } from "./pages/OrderEntry";
 
 const App = () => {
   return (
-    <OrderSummaryProvider>
+    <OrderOptionsProvider>
       <OrderEntry />
-    </OrderSummaryProvider>
+    </OrderOptionsProvider>
   );
 };
 

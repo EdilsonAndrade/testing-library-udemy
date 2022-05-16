@@ -14,7 +14,6 @@ interface Total {
   total: number;
 }
 interface OrderSummaryData {
-  options: Options;
   totals: Total;
   updateOptionsItem(
     name: string,
@@ -25,7 +24,7 @@ interface OrderSummaryData {
 
 const OrderSummaryContext = createContext({} as OrderSummaryData);
 
-const OrderSummaryProvider = ({ children }: { children: React.ReactNode }) => {
+const OrderOptionsProvider = ({ children }: { children: React.ReactNode }) => {
   const [options, setOptions] = useState({
     scoops: new Map<string, number>(),
     toppings: new Map<string, number>(),
@@ -70,7 +69,6 @@ const OrderSummaryProvider = ({ children }: { children: React.ReactNode }) => {
   return (
     <OrderSummaryContext.Provider
       value={{
-        options,
         updateOptionsItem,
         totals,
       }}
@@ -80,7 +78,7 @@ const OrderSummaryProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-function useOrderSummary(): OrderSummaryData {
+function useOrderOptions(): OrderSummaryData {
   const context = useContext(OrderSummaryContext);
   if (Object.entries(context).length === 0) {
     throw new Error("A component should be within OrderSummaryProvider");
@@ -89,4 +87,4 @@ function useOrderSummary(): OrderSummaryData {
   return context;
 }
 
-export { OrderSummaryProvider, useOrderSummary };
+export { OrderOptionsProvider, useOrderOptions as useOrderSummary };

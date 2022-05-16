@@ -5,7 +5,7 @@ import {
 } from "../../../src/pages/utils/react-test-util";
 import { rest } from "msw";
 import { OrderEntry } from "../../pages/OrderEntry";
-import { server } from "../OrderSumary/mocks/server";
+import { server } from "../OrderOptions/mocks/server";
 
 it("should show two alerts when calling scoops and toppings", async () => {
   server.resetHandlers(

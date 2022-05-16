@@ -3,7 +3,7 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
-import { server } from "./tests/OrderSumary/mocks/server";
+import { server } from "./tests/OrderOptions/mocks/server";
 
 // Establish API mocking before all tests.
 beforeAll(() => server.listen());

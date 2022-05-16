@@ -17,14 +17,15 @@ export const SundaeOptions = ({ name, imagePath, updateItem }: Props) => {
   return (
     <>
       <Row>
-        <Col>
+        <Col sm={3}>
           <img alt={`${name} scoops`} src={imagePath} />
         </Col>
       </Row>
       <Row>
-        <Col sm={4}>{name}</Col>
-
-        <Col sm={4}>
+        <Col sm={3}>{name}</Col>
+      </Row>
+      <Row>
+        <Col sm={6}>
           <Form.Group controlId={`${name}-count`} as={Row}>
             <Form.Label>{name}</Form.Label>
             <Form.Control

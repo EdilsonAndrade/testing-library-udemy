@@ -1,11 +1,11 @@
 import { render, screen } from "../../pages/utils/react-test-util";
 import userEvent from "@testing-library/user-event";
-import { OrderSummary } from "../../pages/OrderSummary";
+import { OrderOptions } from "../../pages/OrderOptions";
+import { OrderEntry } from "../../pages/OrderEntry";
 
 it("should show the subtotal value when I add a scoop", async () => {
-  render(<OrderSummary typeOfOrder="scoops" />);
+  render(<OrderOptions typeOfOrder="scoops" />);
   const user = userEvent.setup();
-
   const scoopsSubTotal = await screen.findByText("Scoops total $", {
     exact: false,
   });
@@ -35,7 +35,7 @@ it("should show the subtotal value when I add a scoop", async () => {
 it("should should show the subtotalValue when I check a topping", async () => {
   const user = userEvent.setup();
 
-  render(<OrderSummary typeOfOrder="toppings" />);
+  render(<OrderOptions typeOfOrder="toppings" />);
 
   const toppingSubTotal = await screen.findByText("Toppings total $", {
     exact: false,
@@ -67,8 +67,7 @@ it("should have total = to 7.5", async () => {
   const user = userEvent.setup();
   render(
     <>
-      <OrderSummary typeOfOrder="scoops" />
-      <OrderSummary typeOfOrder="toppings" />
+      <OrderEntry />
     </>
   );
 

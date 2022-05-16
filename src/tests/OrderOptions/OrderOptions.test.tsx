@@ -1,9 +1,9 @@
-import { screen, render } from "../../../src/pages/utils/react-test-util";
-import { OrderSummary } from "../../pages/OrderSummary";
+import { screen, render } from "../../pages/utils/react-test-util";
+import { OrderOptions } from "../../pages/OrderOptions";
 
 describe("Order Summary", () => {
   it("should list two scoops", async () => {
-    render(<OrderSummary typeOfOrder="scoops" />);
+    render(<OrderOptions typeOfOrder="scoops" />);
 
     const scoops = (await screen.findAllByRole("img", {
       name: /scoops$/i,
@@ -19,7 +19,7 @@ describe("Order Summary", () => {
   });
 
   it("should list three toppings", async () => {
-    render(<OrderSummary typeOfOrder="toppings" />);
+    render(<OrderOptions typeOfOrder="toppings" />);
 
     const toppings = (await screen.findAllByRole("img", {
       name: /toppings$/i,

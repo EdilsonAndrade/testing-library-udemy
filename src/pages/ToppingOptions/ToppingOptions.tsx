@@ -32,10 +32,7 @@ export const ToppinOptions = ({
     <>
       <Row>
         <Col>
-          <img
-            src={`http://localhost/3030/${imagePath}`}
-            alt={`${name} toppings`}
-          />
+          <img src={imagePath} alt={`${name} toppings`} />
         </Col>
       </Row>
       <Row>
