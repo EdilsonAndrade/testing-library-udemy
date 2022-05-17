@@ -59,11 +59,11 @@ const OrderOptionsProvider = ({ children }: { children: React.ReactNode }) => {
     let subTotalToppings = 0;
     let total = 0;
     options.scoops.forEach((value, key, map) => {
-      subTotalScoops += value * scoopsPrice;
+      subTotalScoops += (value > 0 ? value : 0) * scoopsPrice;
     });
 
     options.toppings.forEach((value, key, map) => {
-      subTotalToppings += value * toppingPrice;
+      subTotalToppings += (value > 0 ? value : 0) * toppingPrice;
     });
 
     total = subTotalScoops + subTotalToppings;

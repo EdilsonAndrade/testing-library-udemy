@@ -1,9 +1,9 @@
+import { useState } from "react";
 import { FormEvent } from "react";
 import { ChangeEvent } from "react";
 import { Form } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import { formatCurrency } from "../utils/formatCurrenct";
 interface Props {
   name: string;
   imagePath: string;
@@ -11,7 +11,9 @@ interface Props {
 }
 
 export const SundaeOptions = ({ name, imagePath, updateItem }: Props) => {
+  const [value, setValue] = useState(0);
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(+e.target.value);
     updateItem(name, e.target.value);
   };
   return (
@@ -30,9 +32,10 @@ export const SundaeOptions = ({ name, imagePath, updateItem }: Props) => {
             <Form.Label>{name}</Form.Label>
             <Form.Control
               type="number"
-              defaultValue={0}
               onChange={handleChange}
               role="spinbutton"
+              defaultValue={0}
+              isInvalid={value < 0}
             />
           </Form.Group>
         </Col>

@@ -18,17 +18,21 @@ interface Props {
 export const OrderOptions = ({ typeOfOrder }: Props) => {
   const [sundaesOption, setSundaesOption] = useState<SundaeOption[]>([]);
   const [hasError, setHasError] = useState(false);
+  const [isLoading, setIsloading] = useState(false);
 
   const { updateOptionsItem, totals } = useOrderOptions();
 
   useEffect(() => {
+    setIsloading(true);
     axios
       .get(`http://localhost:3030/${typeOfOrder}`)
       .then((response) => {
         setSundaesOption(response.data);
+        setIsloading(false);
       })
       .catch((error) => {
         setHasError(true);
+        setIsloading(false);
       });
   }, [typeOfOrder]);
 
@@ -38,7 +42,7 @@ export const OrderOptions = ({ typeOfOrder }: Props) => {
 
   const scoopTotalText = typeOfOrder[0].toUpperCase() + typeOfOrder.slice(1);
   const subTotal =
-    typeOfOrder == "scoops" ? totals.subTotalScoops : totals.subTotalToppings;
+    typeOfOrder === "scoops" ? totals.subTotalScoops : totals.subTotalToppings;
   const optionsOfSundae = sundaesOption.map((sundayOption) => {
     if (typeOfOrder === "scoops") {
       return (
@@ -66,12 +70,18 @@ export const OrderOptions = ({ typeOfOrder }: Props) => {
 
   return (
     <>
-      <Row>
-        <Col sm={12}>
-          {scoopTotalText} total {formatCurrency(subTotal)}
-        </Col>
-      </Row>
-      {optionsOfSundae}
+      {isLoading ? (
+        <span>Loading...</span>
+      ) : (
+        <>
+          <Row>
+            <Col sm={12}>
+              {scoopTotalText} total {formatCurrency(subTotal)}
+            </Col>
+          </Row>
+          {optionsOfSundae}
+        </>
+      )}
     </>
   );
 };
